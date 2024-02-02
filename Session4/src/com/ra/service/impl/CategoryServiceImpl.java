@@ -93,4 +93,73 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return null;
     }
+
+    @Override
+    public void update(Category category) {
+        Connection conn = null;
+        try{
+            conn = MySQLConnect.open();
+            String sql = "update Categories set CategoryName = ?, Description = ?, ParentCategoryID = ? where CategoryID = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1,category.getCategoryName());
+            statement.setString(2,category.getDescription());
+            statement.setInt(3,category.getParentCategoryID());
+            statement.setInt(4,category.getCategoryID());
+            statement.executeUpdate();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            MySQLConnect.close(conn);
+        }
+
+    }
+
+    @Override
+    public void delete(int id) {
+        Connection conn = null;
+        try{
+            conn = MySQLConnect.open();
+            String sql = "delete from Categories where CategoryID = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1,id);
+            statement.executeUpdate();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            MySQLConnect.close(conn);
+        }
+
+
+    }
+
+    @Override
+    public Category findById(int id) {
+        Connection conn = null;
+        try{
+            conn = MySQLConnect.open();
+            String sql = "select * from Categories where CategoryID = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1,id);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                Category category = new Category();
+                category.setCategoryID(rs.getInt("CategoryID"));
+                category.setCategoryName(rs.getString("CategoryName"));
+                category.setDescription(rs.getString("Description"));
+                category.setParentCategoryID(rs.getInt("ParentCategoryID"));
+                return category;
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            MySQLConnect.close(conn);
+        }
+        return null;
+    }
 }
