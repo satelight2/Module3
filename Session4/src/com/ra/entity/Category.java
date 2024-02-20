@@ -47,4 +47,14 @@ public class Category {
     public void setParentCategoryID(int parentCategoryID) {
         ParentCategoryID = parentCategoryID;
     }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "CategoryID=" + CategoryID +
+                ", CategoryName='" + CategoryName + '\'' +
+                ", Description='" + Description + '\'' +
+                ", ParentCategoryID=" + ParentCategoryID +
+                '}';
+    }
 }

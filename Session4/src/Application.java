@@ -15,15 +15,17 @@ public class Application {
 //            System.out.println("Kết nối thất bại");
 //        }
         CategoryService categoryService = new CategoryServiceImpl();
+//        categoryService.findById(10);
+//        System.out.println(categoryService.findById(10).getCategoryID());
         Category category = new Category();
-        category.setCategoryName("Shoes");
+        category.setCategoryName("Shoes OUT para");
         category.setDescription("Shoes for men");
         category.setParentCategoryID(2);
         categoryService.insert(category);
 
         System.out.println("new id = "+category.getCategoryID());
         for(Category category1 : categoryService.findAll()){
-            System.out.println(category1.getCategoryID() +":"+category1.getCategoryName());
+            System.out.println(category1.toString());
         }
 //        for(Category category : categoryService.findByName("a")){
 //            System.out.println(category.getCategoryID() +":"+category.getCategoryName());
